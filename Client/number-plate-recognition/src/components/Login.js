@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory,Link } from "react-router-dom";
+import classes from './Login.module.css'
 
 
 export const Login = (props) => {
@@ -55,23 +56,23 @@ export const Login = (props) => {
         newData[e.target.id] =e.target.value;
         setData(newData);
     }
-    return (<>
+    return (<div>
         {/*Header*/}
-        <header className="navbar">
+        <header className={classes.navbar}>
 
-            <ul className="left">
+            <ul className={classes.left}>
                 <li><strong>CDAC-Logo</strong></li>
                 <Link to="/about"> <li>About</li></Link>
             </ul>
 
-            <ul className="right">
+            <ul className={classes.right}>
                 <Link to="/"><li>Log in</li></Link>
             </ul>
         </header>
 
 
 
-        <div class="login">
+        <div class={classes.login}>
             <h2>Login</h2>
             <form onSubmit={(e) => submit(e)} action="/info" method="post">
                 <input type="text" onChange={(e) => handle(e)} placeholder="Enter Username" id="username" value={data.username} name="username" required />
@@ -82,6 +83,6 @@ export const Login = (props) => {
 
             </form>
         </div>
-    </>
+    </div>
     )
 }
