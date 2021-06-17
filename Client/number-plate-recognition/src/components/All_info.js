@@ -1,30 +1,38 @@
 import React,{useState,useEffect} from 'react'
-import {Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {Indi_info} from './Indi_info'
 
 
-export const All_info = ({uuid,authorized}) => {
-    const [all_info, setall_info] = useState([])
+export const All_info = () => {
+    const [all_info, setall_info] = useState([]);
+    const [auth,setAuth]=useState(1);/*For checking authorization */
   useEffect(() => {
-   fetch(`/${uuid}`).then(response => response.json().then(
+   fetch(`/info`, {
+    method: 'GET',
+    headers: {
+        "x-access-token":sessionStorage.getItem("token"),
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+    }}).then(response => response.json().then(
       data =>{
-       setall_info(data);
-     }));
+        if(data["message"]){setAuth(0);}
+        else{
+       setall_info(data);}
+     })).catch(error=>console.log(error));
  }, []);
 
- if(authorized){ 
+if(auth==0){return <Redirect to="/"/>}  
     return (
         <>
-        <p><strong>uuid:</strong> {uuid}</p>
         <table>
-            <thead><tr><th><strong>cam_id</strong></th> <th><strong> license_number</strong></th> <th><strong> license_number_chars_confidence_list</strong></th> <th><strong> license_number_confidence_sum</strong></th> <th><strong> timestamp </strong></th> <th><strong> vehicle_detection_confidence</strong></th> </tr></thead>
+            <thead><tr><th><strong>cam_id</strong></th> <th><strong> license_number</strong></th> <th><strong> license_number_chars_confidence_list</strong></th> <th><strong> license_number_confidence_sum</strong></th> <th><strong> timestamp </strong></th> <th><strong> vehicle_detection_confidence</strong></th><th><strong>image_id</strong></th></tr></thead>
             <tbody>
             {
                 all_info.map(indi_info =>
-                    <tr key={indi_info.sno}>
+                    <tr key={indi_info.image_id}>
                         <Indi_info indi_info={indi_info}/>
-                            
                     </tr>
+                            
 
                 )
             }
@@ -33,9 +41,6 @@ export const All_info = ({uuid,authorized}) => {
 
         </>
     )
-}
 
- else{
-     return <Redirect to ="/"/>;
- }
+
 }

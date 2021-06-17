@@ -11,6 +11,10 @@
     padding: 0;
     position: sticky;
     top:0;
+    border: 1px solid;
+    box-shadow: 0 12px 15px -3px #777;
+  -webkit-box-shadow: 0 12px 15px -3px #777;
+  -moz-box-shadow: 0 12px 15px -3px #777;
   }
   .left{
     display: flex;
@@ -97,13 +101,8 @@
     border-radius: 20px;
   }
   .login form button:hover{
-    margin-top:20px;
-    width:50%;
-    height:50px;
-    border-radius: 40px;
     color:#000;
     background-color:#9BD770 ;
     font-weight: 600;
-    font-size: 1.2em;
   
   }

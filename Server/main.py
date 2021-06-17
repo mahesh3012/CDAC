@@ -1,8 +1,10 @@
-from flask import Flask,jsonify, request
+from flask import Flask,jsonify, request, make_response
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
 import json 
-import base64
+import jwt
+from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
 
 with open('config.json','r') as c:
     params=json.load(c)["params"]
@@ -16,7 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI']=conn
 db = SQLAlchemy(app)
 
 class vehicle_info(db.Model):
-    sno=db.Column(db.Integer, primary_key=True)
+    image_id=db.Column(db.String(50), primary_key=True)
     uuid=db.Column(db.String(50))
     license_number=db.Column(db.String(50))
     vehicle_detection_confidence=db.Column(db.Float(50))
@@ -24,46 +26,105 @@ class vehicle_info(db.Model):
     license_number_confidence_sum=db.Column(db.Float(50))
     cam_id=db.Column(db.String(50))
     timestamp=db.Column(db.String(50))
+    user_id=db.Column(db.String(50))
+    #user_id=db.Column(db.String(50), db.ForeignKey('user.user_id'))
+    manually_enter_LP_number=db.Column(db.String(50))
 
-class userdata(db.Model):
-    sno=db.Column(db.Integer, primary_key=True)
-    username=db.Column(db.String(20))
-    password=db.Column(db.String(20))
-    uuid=db.Column(db.String(50))
+class user_info(db.Model):
+    user_id=db.Column(db.String(50), primary_key=True)
+    editing_rights=db.Column(db.Integer)
+    user_password=db.Column(db.String(50))
+    user_mail_id=db.Column(db.String(50))
+    #vehicles=db.relationship('vehicle_info',backref='user',lazy='select')
 
-@app.route('/',methods=['POST','GET'])
-def post_uuid():
+def token_required(f):
+    @wraps(f)
+    def decorated(*args,**kwargs):
+        token = None
+
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        if not token:
+            return jsonify({'message':'token is missing'}),401
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+            current_user=user_info.query.filter_by(user_id=data['username']).first()
+        except:
+            return  jsonify({'message':'token is invalid'}),401
+        
+        return f(current_user,*args,**kwargs)
+    
+    return decorated
+
+@app.route('/login',methods=['POST','GET'])
+def login():
     if request.method == 'POST':
-        #post request coming from react in form of json
         username=request.json['username']
         password=request.json['password']
-
-        userinfo=userdata.query.filter_by(username=base64.decodebytes(username.encode()).decode(),password=base64.decodebytes(password.encode()).decode()).first()
-        if(userinfo):
-            return jsonify(userinfo.uuid)
-        else:
-            return jsonify("error")    
+        if not username or not password:
+            return jsonify({"error":"error"})
+        user=user_info.query.filter_by(user_id=username).first()
+        if not user:
+            return jsonify({"error":"Invalid Username"})
+        if user.user_password==password:
+            token = jwt.encode({'username':user.user_id},app.config['SECRET_KEY'])
+            return jsonify({'token':token.decode('UTF-8')})
+        return jsonify({"error":"Invalid Password"})
     else:
         return 'Nothing to see here yet'            
 
-@app.route('/<string:uuid>',methods=['GET'])
-def get_info(uuid):
-    all_info= vehicle_info.query.filter_by(uuid=uuid).all()
+@app.route('/info',methods=['GET'])
+@token_required
+def get_info(current_user):
+    all_info= vehicle_info.query.filter_by(user_id=current_user.user_id).all()
     info_list=[]
-
-    for row in all_info:
-        indi_info = {
-        "sno":row.sno,    
-        "uuid":row.uuid,
-        "license_number":row.license_number,
-        "vehicle_detection_confidence":row.vehicle_detection_confidence,
-        "license_number_chars_confidence_list":row.license_number_chars_confidence_list,
-        "license_number_confidence_sum":row.license_number_confidence_sum,
-        "cam_id":row.cam_id,
-        "timestamp":row.timestamp
-        }
-        info_list.append(indi_info)
+    if(current_user.editing_rights):
+        for row in all_info:
+            indi_info = {
+            "image_id":row.image_id,    
+            "uuid":row.uuid,
+            "license_number":row.license_number,
+            "vehicle_detection_confidence":row.vehicle_detection_confidence,
+            "license_number_chars_confidence_list":row.license_number_chars_confidence_list,
+            "license_number_confidence_sum":row.license_number_confidence_sum,
+            "cam_id":row.cam_id,
+            "timestamp":row.timestamp,
+            "manually_enter_LP_number":row.manually_enter_LP_number,
+            }
+            info_list.append(indi_info)
+    else:
+        for row in all_info:
+            indi_info = {
+            "image_id":row.image_id,    
+            "uuid":row.uuid,
+            "license_number":row.license_number,
+            "vehicle_detection_confidence":row.vehicle_detection_confidence,
+            "license_number_chars_confidence_list":row.license_number_chars_confidence_list,
+            "license_number_confidence_sum":row.license_number_confidence_sum,
+            "cam_id":row.cam_id,
+            "timestamp":row.timestamp,
+            }
+            info_list.append(indi_info)        
     return jsonify(info_list)    
+
+@app.route('/<image_id>',methods=['GET'])
+@token_required
+def get_image(current_user,image_id):
+    row=vehicle_info.query.filter_by(image_id=image_id,user_id=current_user.user_id).first()
+    if row:
+        return jsonify({'image':"this is your image"})
+    return jsonify({"message":"sorry no image found"})
+
+@app.route('/<image_id>/manual_lp',methods=['POST'])
+@token_required
+def change_lp(current_user,image_id):
+    if not current_user.editing_rights:
+        return jsonify({'message':'Cannot perform this function!'})
+    number=request.json['manually_entered_LP_number']
+    row=vehicle_info.query.filter_by(image_id=image_id).first()
+    row.manually_enter_LP_number=number
+    db.session.commit()
+    return jsonify({'message':'updated the LP number in database'})
 
 if __name__=="__main__":
     app.run(debug=True)
