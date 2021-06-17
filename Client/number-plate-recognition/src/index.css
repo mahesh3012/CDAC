@@ -8,7 +8,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgba(247, 230, 233,0.5);
   background-color: #F7DBFF;
-  
+  overflow-x:hidden ;
   min-height:100vh;
   position: absolute;
 }
@@ -31,6 +31,10 @@ code {
   padding: 0;
   position: sticky;
   top:0;
+  border: 1px solid;
+    box-shadow: 0 12px 15px -3px #777;
+  -webkit-box-shadow: 0 12px 15px -3px #777;
+  -moz-box-shadow: 0 12px 15px -3px #777;
 }
 .left{
   display: flex;
@@ -66,7 +70,7 @@ table{
   margin:0 auto;
   background-color: black;
   margin-bottom: 100px;
-  width: 70%;
+  width: 70vw;
 }
 th{
   width:80%;

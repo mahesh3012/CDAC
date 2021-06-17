@@ -4,19 +4,24 @@ import {
   } from "react-router-dom";
 
   import classes from './Header.module.css'
-export const Header = () => {
+export const Header = ({authorized}) => {
+   
     return (
         <header className={classes.navbar}>
             
                     <ul className={classes.left}>
                         <li><strong>CDAC-Logo</strong></li>
-                        <Link to="/info"> <li>Info</li></Link>
+                        <Link to="/info"> <li>Home</li></Link>
                         <Link to="/about"> <li>About</li></Link>
                     </ul>
 
                     <ul className={classes.right}>
-                        <li>Your Name</li>
-                        <Link to="/"><li>Log Out</li></Link>
+                        
+
+                    <Link to="/" onClick={()=>{
+                        sessionStorage.removeItem("token")
+                    }}><li>Log out</li></Link>
+                    
                     </ul>
         </header>
     )

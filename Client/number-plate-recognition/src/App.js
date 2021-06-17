@@ -13,11 +13,6 @@ import {
 
 function App() {
 
-  //a call back function to get updated uuid from login page
-  const [uuid, set_uuid] = useState("")
-  function handle_uuid(newValue) {
-    set_uuid(newValue);
-  }
 
   const [authorized, set_authorized] = useState(false)
   function handle_authorized(newValue) {
@@ -31,17 +26,17 @@ function App() {
       <Switch>
 
         <Route exact path="/">
-          <Login uuid={uuid} handle_uuid={handle_uuid} handle_authorized={handle_authorized} />
+          <Login/>
         </Route>
 
 
         <Route exact path="/info">
-          <Header />
-          <All_info uuid={uuid} authorized={authorized}/>
+          <Header/>
+          <All_info/>
         </Route>
 
         <Route exact path="/about">
-          <Header />
+        <Header/>
           <About />
         </Route>
 

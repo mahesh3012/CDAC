@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory,Link } from "react-router-dom";
+import { useHistory,Link, Redirect } from "react-router-dom";
 import classes from './Login.module.css'
 
 
@@ -10,42 +10,22 @@ export const Login = (props) => {
         password: ""
     })
 
-
-    //function to send uuid from child to parent
-    function handle_uuid_here(newValue) {
-        props.handle_uuid(newValue);
-    }
-
-    function handle_authorized_here(newValue) {
-        props.handle_authorized(newValue);
-    }
-
     function submit(e) {
         e.preventDefault();
-        let encrypted_data={
-            username: btoa(data.username),
-            password: btoa(data.password)
-        }
-        console.log(encrypted_data);
-        fetch('/', {
+        fetch('/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(encrypted_data)
+            body: JSON.stringify(data)
         })
             .then(res => res.json())
             .then(data => {
-                if (data !== "error") {
-                    handle_uuid_here(data);
-                    handle_authorized_here(true);
-                    history.push("/info");
-                }
-                else {
-                    history.push("/");
-                    window.location.reload();
-                    alert("invalid username or password");
+                if(data["error"]){alert(data["error"]);}
+                else{
+                sessionStorage.setItem("token",data["token"])
+                history.push("/info");
                 }
             });
 
@@ -57,18 +37,17 @@ export const Login = (props) => {
         setData(newData);
     }
     return (<div>
-        {/*Header*/}
+        {/* Header*/}
         <header className={classes.navbar}>
 
             <ul className={classes.left}>
                 <li><strong>CDAC-Logo</strong></li>
-                <Link to="/about"> <li>About</li></Link>
             </ul>
 
             <ul className={classes.right}>
                 <Link to="/"><li>Log in</li></Link>
             </ul>
-        </header>
+        </header> 
 
 
 
