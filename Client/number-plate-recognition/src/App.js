@@ -26,6 +26,7 @@ function App() {
       <Switch>
 
         <Route exact path="/">
+          <Header/>
           <Login/>
         </Route>
 

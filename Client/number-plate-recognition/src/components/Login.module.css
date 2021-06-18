@@ -12,9 +12,9 @@
     position: sticky;
     top:0;
     border: 1px solid;
-    box-shadow: 0 12px 15px -3px #777;
-  -webkit-box-shadow: 0 12px 15px -3px #777;
-  -moz-box-shadow: 0 12px 15px -3px #777;
+    box-shadow: 0 7px 8px -3px #777;
+  -webkit-box-shadow: 0 7px 8px -3px #777;
+  -moz-box-shadow: 0 7px 8px -3px #777;
   }
   .left{
     display: flex;

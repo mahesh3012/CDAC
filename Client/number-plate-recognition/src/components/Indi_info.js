@@ -4,17 +4,17 @@ export const Indi_info = ({indi_info}) => {
     function manual(e,image_id){
         e.preventDefault();
         const final_value=document.getElementById(indi_info.image_id).value;
-        console.log(final_value)
-        fetch(`/${image_id}/manual_lp`, {
+        let data={
+            "manually_entered_LP_number":final_value
+        }
+        fetch(`http://localhost:5000/${image_id}/manual_lp`, {
             method: 'POST',
             headers: {
                 "x-access-token":sessionStorage.getItem("token"),
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
             },
-        body:{
-            "manually_entered_LP_number":final_value
-        }}).then(res => res.json).then(data =>console.log(data))
+        body:JSON.stringify(data)}).then(res => res.json()).then(data =>alert(data["message"]))
     }
     if(indi_info.manually_enter_LP_number){
     return (<>
