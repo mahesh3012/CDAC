@@ -115,7 +115,7 @@ def get_image(current_user,image_id):
         return jsonify({'image':"this is your image"})
     return jsonify({"message":"sorry no image found"})
 
-@app.route('/<image_id>/manual_lp',methods=['POST'])
+@app.route('/<string:image_id>/manual_lp',methods=['POST'])
 @token_required
 def change_lp(current_user,image_id):
     if not current_user.editing_rights:

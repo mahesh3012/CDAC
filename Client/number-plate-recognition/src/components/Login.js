@@ -36,18 +36,8 @@ export const Login = (props) => {
         newData[e.target.id] =e.target.value;
         setData(newData);
     }
-    return (<div>
-        {/* Header*/}
-        <header className={classes.navbar}>
-
-            <ul className={classes.left}>
-                <li><strong>CDAC-Logo</strong></li>
-            </ul>
-
-            <ul className={classes.right}>
-                <Link to="/"><li>Log in</li></Link>
-            </ul>
-        </header> 
+    return (
+        
 
 
 
@@ -62,6 +52,5 @@ export const Login = (props) => {
 
             </form>
         </div>
-    </div>
     )
 }
