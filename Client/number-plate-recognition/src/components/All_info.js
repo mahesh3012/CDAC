@@ -27,7 +27,6 @@ export const All_info = () => {
  }, []);
 
 if(auth===0){return <Redirect to="/"/>}
-console.log(editing_rights);
 if(editing_rights==1){
     return (
         <>

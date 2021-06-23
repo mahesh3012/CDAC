@@ -1,10 +1,12 @@
-import base64
+from flask import Flask
+from werkzeug.security import generate_password_hash, check_password_hash
 
-username="mahesh"
-password="123456789"
+app=Flask(__name__)
 
-print(base64.b64encode(username.encode()),"  ", base64.b64encode(password.encode()))
-encrypted_username=base64.b64encode(username.encode())
-encrypted_password=base64.b64encode(password.encode())
+@app.route("/<password>")
+def generate_hash(password):
+    return generate_password_hash(password)
 
-print(base64.decodebytes(encrypted_username).decode()," ",base64.decodebytes(encrypted_password).decode())
+
+if __name__=="__main__":
+    app.run(debug=True,port=7000)

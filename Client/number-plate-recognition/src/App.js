@@ -5,6 +5,8 @@ import { Footer } from './components/Footer'
 import { All_info } from './components/All_info'
 import { Login } from './components/Login'
 import { About } from './components/About'
+import {ForgotPassword} from './components/ForgotPassword'
+import {ChangePassword} from './components/ChangePassword'
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,12 +14,6 @@ import {
 } from "react-router-dom";
 
 function App() {
-
-
-  const [authorized, set_authorized] = useState(false)
-  function handle_authorized(newValue) {
-    set_authorized(newValue);
-  }
 
   return (
 
@@ -39,6 +35,16 @@ function App() {
         <Route exact path="/about">
         <Header/>
           <About />
+        </Route>
+
+        <Route exact path="/forgot_password">
+          <Header/>
+          <ForgotPassword/>
+        </Route>
+
+        <Route exact path="/change_password">
+          <Header/>
+          <ChangePassword/>
         </Route>
 
       </Switch>
