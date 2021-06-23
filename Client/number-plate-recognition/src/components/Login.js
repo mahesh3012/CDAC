@@ -3,7 +3,7 @@ import { useHistory,Link, Redirect } from "react-router-dom";
 import classes from './Login.module.css'
 
 
-export const Login = (props) => {
+export const Login = () => {
     const history = useHistory();
     const [data, setData] = useState({
         username: "",
@@ -41,13 +41,13 @@ export const Login = (props) => {
 
 
 
-        <div class={classes.login}>
+        <div className={classes.login}>
             <h2>Login</h2>
             <form onSubmit={(e) => submit(e)} action="/info" method="post">
                 <input type="text" onChange={(e) => handle(e)} placeholder="Enter Username" id="username" value={data.username} name="username" required />
 
                 <input type="password" onChange={(e) => handle(e)} placeholder="Enter Password" id="password" value={data.password} name="password" required />
-                <a href="/">Forgot password ?</a>
+                <Link to="/forgot_password">Forgot password ?</Link>
                 <button type="submit">Login</button>
 
             </form>

@@ -6,6 +6,10 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
+#for sending emails
+from flask_mail import Mail,Message
+from random import randint
+
 with open('config.json','r') as c:
     params=json.load(c)["params"]
 
@@ -13,10 +17,23 @@ if(params["local_server"]):
     conn=params['local_uri']
 
 app=Flask(__name__)
+
+#for connecting mysqldatabase and sqlalchemy
 app.config['SECRET_KEY']='SuperSecretKey'
 app.config['SQLALCHEMY_DATABASE_URI']=conn
 db = SQLAlchemy(app)
 
+#required configs for mail
+mail=Mail(app)
+app.config["MAIL_SERVER"]='smtp.gmail.com'                  
+app.config["MAIL_PORT"]=465
+app.config["MAIL_USERNAME"]=''#sender_email_username      #allow less secure apps access in google settings of this account
+app.config['MAIL_PASSWORD']=''#mail_password                    #you have to give your password of gmail account
+app.config['MAIL_USE_TLS']=False
+app.config['MAIL_USE_SSL']=True
+mail=Mail(app)
+
+#getting databases
 class vehicle_info(db.Model):
     image_id=db.Column(db.String(50), primary_key=True)
     uuid=db.Column(db.String(50))
@@ -66,7 +83,7 @@ def login():
         user=user_info.query.filter_by(user_id=username).first()
         if not user:
             return jsonify({"error":"Invalid Username"})
-        if user.user_password==password:
+        if check_password_hash(user.user_password,password):
             token = jwt.encode({'username':user.user_id},app.config['SECRET_KEY'])
             return jsonify({'token':token.decode('UTF-8')})
         return jsonify({"error":"Invalid Password"})
@@ -125,6 +142,40 @@ def change_lp(current_user,image_id):
     row.manually_enter_LP_number=number
     db.session.commit()
     return jsonify({'message':'updated the LP number in database'})
+
+verify_user=user_info.query.filter_by(user_mail_id="email").first()
+glob_otp=0
+#apis for generating and verifying OTP and changing password
+@app.route('/getOTP',methods=["POST"])
+def getOTP():
+    otp=randint(000000,999999)
+    global glob_otp
+    glob_otp=otp
+    email=request.json['email']
+    global verify_user
+    verify_user=db.session.query(user_info).filter_by(user_mail_id=email).first()
+    if(verify_user):
+        msg=Message(subject='CDAC-ForgotPassword-OTP',sender='sender_email',recipients=[email])#sender_email
+        msg.body=str("Your OTP to create new password is: "+str(otp))
+        mail.send(msg)
+        return jsonify({"success":"success"})
+    else:
+        return jsonify({"error":"Your email is not registered. Please enter a registered email."})
+
+@app.route('/changepassword',methods=['POST'])
+def changePassword():
+    user_otp=request.json['otp']
+    new_password=request.json['password']
+    global verify_user,glob_otp
+    if glob_otp==int(user_otp):
+        user=user_info.query.filter_by(user_id=verify_user.user_id).first() #this is done so that session is started within function and changes occur
+        user.user_password=generate_password_hash(new_password)# this hashes the password
+        db.session.commit()
+        return jsonify({"success":"Your password has been updated, please proceed to login page and login using the new password"
+        })
+    else:
+        return jsonify({"error":"The OTP you have entered is wrong. Try again"})
+
 
 if __name__=="__main__":
     app.run(debug=True)
