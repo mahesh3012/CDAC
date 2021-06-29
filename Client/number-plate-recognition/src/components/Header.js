@@ -2,8 +2,9 @@ import React from 'react'
 import {
     Link
 } from "react-router-dom";
-
 import classes from './Header.module.css'
+import login_icon from '../images/login_icon.png'
+import logout_icon from '../images/logout_icon.png'
 
 export const Header = () => {
     if (sessionStorage.getItem("token")) {
@@ -21,7 +22,7 @@ export const Header = () => {
 
                     <Link to="/" onClick={() => {
                         sessionStorage.removeItem("token")
-                    }}><li>Log out</li></Link>
+                    }}><li><img src={logout_icon} id={classes.logout_icon}/></li></Link>
 
                 </ul>
             </header>
@@ -37,7 +38,7 @@ export const Header = () => {
         </ul>
 
         <ul className={classes.right}>
-            <Link to="/"><li>Log in</li></Link>
+        <Link to="/"><li>Log in</li><img src={login_icon} id={classes.login_icon} alt="LogOut"/></Link>
         </ul>
     </header> 
         )

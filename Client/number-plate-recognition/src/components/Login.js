@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory,Link, Redirect } from "react-router-dom";
 import classes from './Login.module.css'
-
+import login_img from '../images/login.png'
 
 export const Login = () => {
     const history = useHistory();
@@ -37,12 +37,12 @@ export const Login = () => {
         setData(newData);
     }
     return (
-        
+<div className={classes.login}>
+<img src={login_img} alt="login.png"/>
 
-
-
-        <div className={classes.login}>
-            <h2>Login</h2>
+        <div className={classes.login_form}>
+        <h1>Login</h1>
+            
             <form onSubmit={(e) => submit(e)} action="/info" method="post">
                 <input type="text" onChange={(e) => handle(e)} placeholder="Enter Username" id="username" value={data.username} name="username" required />
 
@@ -51,6 +51,7 @@ export const Login = () => {
                 <button type="submit">Login</button>
 
             </form>
+        </div>
         </div>
     )
 }
