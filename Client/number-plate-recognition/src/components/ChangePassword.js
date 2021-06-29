@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './ChangePassword.module.css'
+import change_password from '../images/change_password.png'
 
 export const ChangePassword = () => {
     function submit(e) {
@@ -31,6 +32,8 @@ export const ChangePassword = () => {
     }
     return (<>
         <h1>Change Password</h1>
+        <div className={classes.container}>
+        <img src={change_password} alt="change_password.png"/>
         <form method="post" onSubmit={(e) => submit(e)} className={classes.ChangePassword}>
             <input type="password" placeholder="Enter New Password" id="password" className={classes.Password} required></input><br/>
             <input type="password" placeholder="Confirm Password" id="confirm_password" className={classes.Password} required></input><br />
@@ -38,6 +41,7 @@ export const ChangePassword = () => {
             <input type="text" placeholder="OTP" name="OTP" id="OTP" className={classes.OTP} required></input><br/>
             <button type="submit">Submit</button>
         </form>
+        </div>
     </>
     )
 }

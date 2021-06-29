@@ -2,7 +2,7 @@ import React from 'react'
 import {useHistory
 } from "react-router-dom";
 import classes from './ForgotPassword.module.css'
-
+import forgot_password from '../images/forgot_password.png'
 export const ForgotPassword = () => {
 const history=useHistory()
 function submit(e){
@@ -22,10 +22,13 @@ function submit(e){
     })
 }
     return (
+        <>
+        <img src={forgot_password} alt="forgot_password.png" className={classes.forgot_password_img}/>
        <form onSubmit={(e) => submit(e)} method="post" className={classes.ForgotPassword}>
            <label htmlFor="e-mail">Enter your registered email:</label><br/>
            <input type="e-mail" id="e-mail" name="e-mail" placeholder="registered e-mail" required></input>
             <button type="submit">Get OTP</button>
        </form>
+       </>
     )
 }

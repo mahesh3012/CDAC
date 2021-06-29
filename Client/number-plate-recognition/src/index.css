@@ -1,4 +1,5 @@
 body {
+  /*illustration shade:#3A62B7*/
   margin: 0;
   width:100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -6,8 +7,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgba(247, 230, 233,0.5);
-  background-color: #F7DBFF;
+  background-color: #ffffff;
   overflow-x:hidden ;
   min-height:100vh;
   position: absolute;
@@ -18,6 +18,24 @@ code {
     monospace;
 }
 
+
+/*common properties*/
+h1{
+  color:#434e8a;
+}
+button{
+  color:white;
+  background-color:#3f51b5 ;
+}
+button:hover{
+  background-color:#2196f3 ;
+}
+input{
+  outline: none;
+  background-color:#f3f0f1;
+}
+
+
 /*for Header*/
 .navbar{
   margin: 0;
@@ -25,7 +43,7 @@ code {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(212, 91, 91);
+  background-color:#3f51b5;
   width: 100%;
   height:50px;
   padding: 0;
@@ -55,7 +73,7 @@ code {
   padding-top: 13px;
 }
 .navbar a:hover{
-  background-color:  rgb(212, 57, 57);
+  background-color:  #2196f3;
   color: white;
   margin:0;
 }
@@ -77,78 +95,12 @@ table{
 th{
 
   color:white;
-  background-color: rgb(212, 57, 57);
+  background-color: #3646a1;
   height: 40px;
   border: 0.5px solid black;
 }
 td{
   padding:5px;
-  background-color:rgba(247, 230, 233,1);
+  background-color:#e8e6f7;
   border: 0.5px solid black;
-}
-
-/*for Footer*/
-/* footer{
-  width:100%;
-  height:40px;
-  background-color:rgb(212, 57, 57) ;
-  position:absolute;
-  bottom:0;
-  text-align: center;
-  padding-top:14px;
-} */
-
-/*for login form*/
-
-.login{
-  border-radius: 10px;
-  width:300px;
-  height: 300px;
-  background-color:rgb(212, 57, 57) ;
-  display: block;
-  margin: auto;
-  padding-top: 40px;
-  -webkit-box-shadow: 0 10px 6px -4px #777;
-  -moz-box-shadow: 0 10px 6px -4px #777;
-    box-shadow: 0 10px 6px -4px #777;
-}
-
-.login form{
-  width: 100%;
-  height: 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-content: space-around;
-}
-
-.login form input{
-  width:90%;
-  height:40px;
-}
-.login form a{
-  margin-top:10px;
-  font-size: small;
-}
-.login h2{
-  color: white;
-  position: relative;
-  width: 100%;
-  text-align: center;
-}
-.login form button{
-  margin-top:20px;
-  width:40%;
-  height:40px;
-  border-radius: 40px;
-}
-.login form button:hover{
-  margin-top:20px;
-  width:40%;
-  height:40px;
-  border-radius: 40px;
-  color:white;
-  background-color:rgb(212, 91, 91) ;
-
 }

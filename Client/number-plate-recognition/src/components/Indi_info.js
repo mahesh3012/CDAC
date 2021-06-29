@@ -1,6 +1,7 @@
 import React from 'react'
 
 export const Indi_info = ({ indi_info }) => {
+
     function manual(e, image_id) {
         e.preventDefault();
         const final_value = document.getElementById(indi_info.image_id).value;
@@ -27,7 +28,7 @@ export const Indi_info = ({ indi_info }) => {
             <td>{indi_info.vehicle_detection_confidence}</td>
             <td>{indi_info.image_id}</td>
             <td><input type="text" defaultValue={indi_info.manually_enter_LP_number} id={indi_info.image_id}></input>
-                <input type="button" onClick={(e) => manual(e, indi_info.image_id,)} value="Submit"></input>
+                <button type="button" onClick={(e) => manual(e, indi_info.image_id,)}>Submit</button>
             </td>
 
 
