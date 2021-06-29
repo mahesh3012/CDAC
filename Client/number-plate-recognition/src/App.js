@@ -7,6 +7,7 @@ import { Login } from './components/Login'
 import { About } from './components/About'
 import {ForgotPassword} from './components/ForgotPassword'
 import {ChangePassword} from './components/ChangePassword'
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -46,6 +47,8 @@ function App() {
           <Header/>
           <ChangePassword/>
         </Route>
+
+        
 
       </Switch>
 
