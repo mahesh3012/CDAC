@@ -25,11 +25,14 @@ export const All_info = () => {
     }
      })).catch(error=>console.log(error));
  }, []);
-
+let divStyle={
+    "overflow":"auto"
+}
 if(auth===0){return <Redirect to="/"/>}
 if(editing_rights==1){
     return (
         <>
+        <div style={divStyle}>
         <table>
             <thead><tr><th><strong>cam_id</strong></th> <th><strong> license_number</strong></th> <th><strong> license_number_chars_confidence_list</strong></th> <th><strong> license_number_confidence_sum</strong></th> <th><strong> timestamp </strong></th> <th><strong> vehicle_detection_confidence</strong></th><th><strong>image_id</strong></th><th><strong>manually_enter_LP_number</strong></th></tr></thead>
             <tbody>
@@ -44,13 +47,14 @@ if(editing_rights==1){
             }
             </tbody>
         </table>    
-
+</div>
         </>
     )
         }
         else{
             return (
                 <>
+                <div style={divStyle}>
                 <table>
                     <thead><tr><th><strong>cam_id</strong></th> <th><strong> license_number</strong></th> <th><strong> license_number_chars_confidence_list</strong></th> <th><strong> license_number_confidence_sum</strong></th> <th><strong> timestamp </strong></th> <th><strong> vehicle_detection_confidence</strong></th><th><strong>image_id</strong></th></tr></thead>
                     <tbody>
@@ -65,7 +69,7 @@ if(editing_rights==1){
                     }
                     </tbody>
                 </table>    
-        
+        </div>
                 </>
             ) 
         }

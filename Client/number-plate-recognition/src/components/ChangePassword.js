@@ -35,10 +35,10 @@ export const ChangePassword = () => {
         <div className={classes.container}>
         <img src={change_password} alt="change_password.png"/>
         <form method="post" onSubmit={(e) => submit(e)} className={classes.ChangePassword}>
-            <input type="password" placeholder="Enter New Password" id="password" className={classes.Password} required></input><br/>
-            <input type="password" placeholder="Confirm Password" id="confirm_password" className={classes.Password} required></input><br />
-            <label htmlFor="OTP">Enter the 6-digit code sent on your registered email:</label><br/>
-            <input type="text" placeholder="OTP" name="OTP" id="OTP" className={classes.OTP} required></input><br/>
+            <input type="password" placeholder="Enter New Password" id="password" className={classes.Password} required></input>
+            <input type="password" placeholder="Confirm Password" id="confirm_password" className={classes.Password} required></input>
+            <label htmlFor="OTP">Enter the 6-digit code sent on your registered email:</label>
+            <input type="text" placeholder="OTP" name="OTP" id="OTP" className={classes.OTP} required></input>
             <button type="submit">Submit</button>
         </form>
         </div>
