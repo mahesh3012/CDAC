@@ -1,6 +1,7 @@
 import React from 'react'
 
 
+
 export const Indi_info = ({ indi_info }) => {
     function manual(e, image_id) {
         e.preventDefault();
@@ -27,7 +28,7 @@ export const Indi_info = ({ indi_info }) => {
             <td>{indi_info.timestamp}</td>
             <td>{indi_info.vehicle_detection_confidence}</td>
             {/* <td>{indi_info.image_id}</td> */}
-            <td><center><img src={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`} height="150"/></center></td>
+            <td><center><a href={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`}><img src={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`} height="150"/></a></center></td>
             <td><input type="text" defaultValue={indi_info.manually_enter_LP_number} id={indi_info.image_id}></input>
                 <input type="button" onClick={(e) => manual(e, indi_info.image_id,)} value="Submit"></input>
             </td>
@@ -46,7 +47,7 @@ export const Indi_info = ({ indi_info }) => {
             <td>{indi_info.timestamp}</td>
             <td>{indi_info.vehicle_detection_confidence}</td>
             {/* <td>{indi_info.image_id}</td> */}
-            <td><center><img src={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`} height="150"/></center></td>
+            <td><center><a href={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`}><img src={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`} height="150"/></a></center></td>
 
         </>)
     }
