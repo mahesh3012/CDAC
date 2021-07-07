@@ -21,6 +21,7 @@ app=Flask(__name__)
 #for connecting mysqldatabase and sqlalchemy
 app.config['SECRET_KEY']='SuperSecretKey'
 app.config['SQLALCHEMY_DATABASE_URI']=conn
+
 db = SQLAlchemy(app)
 
 #required configs for mail
@@ -83,8 +84,7 @@ def login():
         user=user_info.query.filter_by(user_id=username).first()
         if not user:
             return jsonify({"error":"Invalid Username"})
-        # if check_password_hash(user.user_password,password):
-        if user.user_password==password:
+        if check_password_hash(user.user_password,password):
             token = jwt.encode({'username':user.user_id},app.config['SECRET_KEY'])
             return jsonify({'token':token.decode('UTF-8')})
         return jsonify({"error":"Invalid Password"})

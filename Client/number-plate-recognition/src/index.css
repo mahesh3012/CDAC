@@ -22,6 +22,8 @@ code {
 /*common properties*/
 h1{
   color:#434e8a;
+  text-align: center;
+  font-family:Tahoma, Verdana, sans-serif;
 }
 button{
   color:white;
@@ -84,13 +86,16 @@ a{
 
 /*for table*/
 table{
+  display: block;
   align-items: center;
   margin:0 auto;
-  margin-bottom: 100px;
-  width: 80%;
-  font-size:max(7px,1vw);
+  margin-bottom: 25px;
+  width: 90%;
+  max-height: 75vh;
+  font-size:max(10px,1vw);
   border: 0.5px solid black;
   border-collapse: collapse;
+  overflow-x: auto;
 }
 th{
 

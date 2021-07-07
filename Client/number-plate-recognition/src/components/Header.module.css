@@ -1,8 +1,8 @@
+
 .navbar{
     margin: 0;
     margin-bottom:20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background-color: #3f51b5;
     width: 100%;
@@ -10,10 +10,24 @@
     padding: 0;
     position: sticky;
     top:0;
-    border: 1px solid;
+    color:white;
     box-shadow: 0 7px 8px -3px #777;
   -webkit-box-shadow: 0 7px 8px -3px #777;
   -moz-box-shadow: 0 7px 8px -3px #777;
+}
+.logo{
+  width: 95px;
+  padding-left: 25px;
+  margin-right: 3px;
+}
+.hamburger{
+  display: none;
+}
+.menu{
+  display: flex;
+  width:95%;
+  flex-direction: row;
+  justify-content: space-between;
 }
   
   .left{
@@ -22,30 +36,35 @@
     list-style: none;
     height: 100%;
     align-items: center;
+    padding:0;
+    margin:0;
   }
   .right{
     display: flex;
     list-style: none;
     height: 100%;
+    padding:0;
+    margin:0;
   }
   .navbar li{
     display: inline-block;
     width: fit-content;
     color: white;
-    padding:5px;
+    padding:5px 0px 5px 0px;
     margin-right: 3px;
    
   }
   .navbar a:hover{
     background-color:  #2196f3;
     color: white;
-    margin:0;
   }
   a{
     text-decoration: none;
     color: white;
     height: 45px;
     padding-top: 15px;
+    padding-right: 2.5px;
+    padding-left: 2.5px;
   }
 
   #login_icon{
@@ -59,4 +78,54 @@
     width: 55%;
     margin-left:14px;
     margin-right: -5px;
+  }
+
+  @media screen and (max-width: 900px){
+    .hamburger{
+      position:absolute;
+      right: 3px;
+      display: inline-block;
+      width:50px;
+      padding:0;
+    }
+    .hamburger:hover{
+      background:#001292;
+      cursor: pointer;
+    }
+    .menu{
+      display: none;
+      width:30%;
+      background:#001292;
+      z-index:2;
+      flex-direction: column;
+      align-items: center;
+      position:absolute;
+      right: 3px;
+      top:60px;
+    }
+    .menu > ul{
+      width: 100%;
+    }
+    .menu > li,a{
+      width: 100%;
+      text-align: center;
+    }
+    .left{
+      display: flex;
+      justify-content:flex-start;
+      list-style: none;
+      height: 100%;
+      align-items: center;
+      padding:0;
+      margin:0;
+      flex-direction: column;
+    }
+    .right{
+      display: flex;
+      list-style: none;
+      height: 100%;
+      padding:0;
+      margin:0;
+      flex-direction: column;
+    }
   }
