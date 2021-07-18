@@ -29,7 +29,7 @@ export const Indi_info = ({ indi_info }) => {
             <td>{indi_info.timestamp}</td>
             <td>{indi_info.vehicle_detection_confidence}</td>
             {/* <td>{indi_info.image_id}</td> */}
-            <td><center><a href={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`}><img src={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`} height="150"/></a></center></td>
+            <td><center><a href={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`}><img src={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`} height="150" width="250"/></a></center></td>
             <td><input type="text" defaultValue={indi_info.manually_enter_LP_number} id={indi_info.image_id}></input>
                 <button type="button" onClick={(e) => manual(e, indi_info.image_id,)}>Submit</button>
             </td>
@@ -48,7 +48,7 @@ export const Indi_info = ({ indi_info }) => {
             <td>{indi_info.timestamp}</td>
             <td>{indi_info.vehicle_detection_confidence}</td>
             {/* <td>{indi_info.image_id}</td> */}
-            <td><center><a href={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`}><img src={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`} height="150"/></a></center></td>
+            <td><center><a href={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`}><img src={`http://127.0.0.1:5000/static/images/${indi_info.image_id}`} height="150" width="250"/></a></center></td>
 
         </>)
     }
