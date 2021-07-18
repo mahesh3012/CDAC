@@ -1,6 +1,10 @@
 {
-   "params":{
-       "local_server":"true",
-       "local_uri":"mysql+pymysql://root:@localhost/cdac"
-   } 
+   
+   "database": {
+    "database": "cdac",
+    "host": "0.0.0.0",
+    "user": "root",
+    "password": "root"
+   }
 }
+
