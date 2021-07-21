@@ -5,24 +5,27 @@ import json
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
+# from flask_mysqldb import MySQL
 
 #for sending emails
 from flask_mail import Mail,Message
 from random import randint
 
-with open('config.json','r') as c:
-    params=json.load(c)["params"]
+# with open('config.json','r') as c:
+#     params=json.load(c)["params"]
 
-if(params["local_server"]):
-    conn=params['local_uri']
+# if(params["local_server"]):
+#     conn=params['local_uri']
 
 app=Flask(__name__)
 
 #for connecting mysqldatabase and sqlalchemy
 app.config['SECRET_KEY']='SuperSecretKey'
-app.config['SQLALCHEMY_DATABASE_URI']=conn
+app.config['DATABASE_URI']='mysql+mysqlconnector://root:root@db/main'
 
 db = SQLAlchemy(app)
+
+
 
 #required configs for mail
 mail=Mail(app)
@@ -84,7 +87,7 @@ def login():
         user=user_info.query.filter_by(user_id=username).first()
         if not user:
             return jsonify({"error":"Invalid Username"})
-        if check_password_hash(user.user_password,password):
+        if user.user_password==password:
             token = jwt.encode({'username':user.user_id},app.config['SECRET_KEY'])
             return jsonify({'token':token.decode('UTF-8')})
         return jsonify({"error":"Invalid Password"})

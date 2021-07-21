@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  server:
+    build:  ./server
+    links:
+      - db
+    ports: 
+    - "5000:5000"
+    volumes: 
+    - ./server:/app
+    environment: 
+      FLASK_ENV: development
+  web:
+    build: ./client/number-plate-recognition 
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - ./client/number-plate-recognition:/user/src/app
+    depends_on: 
+      - server
+  db:
+    # image: mysql:5.7.22
+    build: ./mysql-server
+    environment:
+      MYSQL_DATABASE: main
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: 0.0.0.0
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./mysql-server:/var/lib/mysql
+    ports:
+      - "3306:3306"
