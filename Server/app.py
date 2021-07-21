@@ -21,7 +21,8 @@ app=Flask(__name__)
 
 #for connecting mysqldatabase and sqlalchemy
 app.config['SECRET_KEY']='SuperSecretKey'
-app.config['DATABASE_URI']='mysql+mysqlconnector://root:root@db/main'
+#app.config['DATABASE_URI']='mysql+mysqlconnector://root:root@db/main' for docker
+app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:@localhost/cdac'
 
 db = SQLAlchemy(app)
 
