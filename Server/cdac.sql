@@ -7,6 +7,9 @@
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
+create database cdac;
+
+use cdac; 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -40,7 +43,7 @@ CREATE TABLE `user_info` (
 
 INSERT INTO `user_info` (`user_id`, `editing_rights`, `user_password`, `user_mail_id`) VALUES
 ('barun', 0, 'pbkdf2:sha256:260000$3NUPDoFND6v0xmm0$cf8659a54de72e1589c9808b2e6da00afd469635a5effad5922426c714ee3c16', 'barun@gmail.com'),
-('mahesh', 0, 'pbkdf2:sha256:260000$McP4dAqsOeiXPj4W$27b8a0ea0b342df15f40528857c858e867e68f401a4e21673bc92bb65afe841e', 'etcetra.rm@gmail.com'),
+('mahesh', 0, 'pbkdf2:sha256:260000$McP4dAqsOeiXPj4W$27b8a0ea0b342df15f40528857c858e867e68f401a4e21673bc92bb65afe841e', 'mahesh@gmail.com'),
 ('rahul', 1, 'pbkdf2:sha256:260000$Tn02CrjKM88OjlRn$0bdb5864db1ef408819c12232da4edc6faa956989106e67d6b4ae2287d9d1ac7', 'rahul@gmail.com');
 
 -- --------------------------------------------------------
